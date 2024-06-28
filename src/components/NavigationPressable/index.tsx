@@ -2,6 +2,7 @@ import React, { useState } from 'react';
   import { StyleSheet, Text, View } from 'react-native';
 import ChevronDownIcon from '../../../assets/icons/chevron-down-icon.svg';
 import { appStyles } from '../../styles';
+import { truncateMultilineText } from '../../libs';
 
   export default function NavigationPressable(props: NavigationPressableProps){
     const {
@@ -18,7 +19,7 @@ import { appStyles } from '../../styles';
     return (
       <View style={styleProps}>
         <View style={[styles.dropdown]}>
-            <Text style={[appStyles.flexGrow, styles.placeholderStyle]}>{value || placeholder}</Text>
+            <Text style={[appStyles.flexGrow, styles.placeholderStyle]}>{truncateMultilineText(value, 30) || placeholder}</Text>
             <View style={{width: 24}}><ChevronDownIcon /></View>
         </View>
         

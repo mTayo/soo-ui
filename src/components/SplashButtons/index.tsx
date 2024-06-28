@@ -1,5 +1,5 @@
 import {  Pressable, StyleSheet, Text, View } from 'react-native';
-
+import { useFonts } from "expo-font";
 import { theme } from '../../themes';
 import { appStyles } from '../../styles';
 import LoginIcon from '../../../assets/icons/login.svg';
@@ -8,6 +8,9 @@ import ArrowRightIcon from '../../../assets/icons/arrow-right.svg';
 
 export default function SplashButton(props: any) {
     const {onPress, text, type, btnColor="white", icon} = props;
+    const [fontsLoaded] = useFonts({
+       "PlusJakartaSans-Medium": require("../../../assets/fonts/PlusJakartaSans-Medium.ttf"),
+      });
    
     return (
         // @ts-ignore   
@@ -18,8 +21,10 @@ export default function SplashButton(props: any) {
                 ): (
                     <EmailIcon />
                 )}
-                
+              {fontsLoaded && (
                 <Text style={[styles.btnText, appStyles.fontSizeSmall, appStyles.font700, appStyles.whiteColor]}>{text}</Text>
+              )}  
+                
             </View>
             <View style={styles.icon}>
                 <ArrowRightIcon />
@@ -68,9 +73,14 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     btnText: {
-        fontFamily: 'PlusJakartaSans-Regular',
+        fontFamily: 'PlusJakartaSans-Medium',
         // fontSize: fontSizeSmall
     }
 
     
   });
+
+// function useFonts(arg0: { "PlusJakartaSans-Medium": any; "SourceCodePro-LightIt": any; }): [any] {
+//     throw new Error('Function not implemented.');
+// }
+

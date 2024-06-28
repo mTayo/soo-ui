@@ -1,6 +1,4 @@
 import {  StyleSheet, Text } from 'react-native';
-
-import { theme } from '../../themes';
 import { appStyles } from '../../styles';
 
 

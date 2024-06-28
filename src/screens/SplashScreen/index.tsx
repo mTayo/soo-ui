@@ -1,27 +1,35 @@
 import {  Dimensions, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import React, { useReducer } from 'react';
-import Video from 'react-native-video';
+import React, { useEffect, useReducer } from 'react';
+import { Video } from 'expo-av';
 // import { LinearGradient } from 'expo-linear-gradient';
-import LinearGradient from 'react-native-linear-gradient';
-import { deg } from 'react-native-linear-gradient-degree';
+import { LinearGradient } from 'expo-linear-gradient';
 import { appStyles } from '../../styles';
 
 import SplashButton from '../../components/SplashButtons';
 const { width, height } = Dimensions.get("window");
 export default function SplashScreenUI({navigation}: any) {
     const { width: SCREEN_WIDTH } = useWindowDimensions();
+    const video: any = React.useRef(null);
+    useEffect(()=> {
+        video.current.playAsync();
+    }, []);
+  
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={[{ width: SCREEN_WIDTH }, styles.container]}>
+                
                 <Video
-                    source={require("../../../assets/videos/bg-video.mp4")}
+                    ref={video}
                     style={styles.backgroundVideo}
-                    muted={true}
-                    repeat={true}
-                    resizeMode={"cover"}
-                    rate={1.0}
-                    ignoreSilentSwitch={"obey"}
-                />  
+                    // @ts-ignore
+                    resizeMode="cover"
+                   
+                    source={require("../../../assets/videos/bg-video.mp4")}
+                    useNativeControls={false}
+                    isLooping
+                    shouldPlay
+
+                />
                 <View style={[styles.sectionContainer, {paddingTop:72}]}>
                     <Text style={[styles.customText]}>Soo{"\n"}
                     and Carrots</Text>
@@ -35,6 +43,7 @@ export default function SplashScreenUI({navigation}: any) {
                     <SplashButton onPress={()=> {}} text="Continue with Email" type="blue_grey" icon="email" />
        
                 </LinearGradient>
+  
             </View>
         </ScrollView>
 
@@ -69,6 +78,6 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: "800",
         // fontFamily: 'PlusJakartaSans-ExtraBold'
-        fontFamily: 'PlusJakartaSans-Italic'
+        // fontFamily: 'PlusJakartaSans-Italic'
       },
-  });
+ });

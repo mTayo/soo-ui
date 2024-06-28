@@ -2,10 +2,13 @@ import {  Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../../themes';
 import { appStyles } from '../../styles';
+import { useFonts } from 'expo-font';
 
 export default function AppButton(props: any) {
     const {onPress, text, type, btnColor="white", icon} = props;
-   
+    const [fontsLoaded] = useFonts({
+        "PlusJakartaSans-Medium": require("../../../assets/fonts/PlusJakartaSans-Medium.ttf"),
+       });
     return (
         // @ts-ignore   
         <Pressable onPress={onPress} style={styles[type? type: 'blue']}> 
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     btnText: {
-        fontFamily: 'PlusJakartaSans-Bold',
+        fontFamily: 'PlusJakartaSans-Medium',
         fontWeight: '900'
     }
 

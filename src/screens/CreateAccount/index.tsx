@@ -15,9 +15,13 @@ import { validateData } from '../../helpers/validator';
 import { isNotEmptyArray, isObjectEmpty } from '../../libs';
 import NavigationPressable from '../../components/NavigationPressable';
 import { useSelector } from 'react-redux';
+import { useFonts } from 'expo-font';
 
 
 export default function CreateAccountUI({navigation}: any) {
+    const [fontsLoaded] = useFonts({
+        "PlusJakartaSans-Regular": require("../../../assets/fonts/PlusJakartaSans-Regular.ttf"),
+       });
     const selectedCompetition = useSelector((state: any) => state?.selectedCompetition);
     const initialState = {
         formData: {
@@ -85,16 +89,15 @@ export default function CreateAccountUI({navigation}: any) {
                 errors: validate
             });
         }
-
     };
   
     return (
         <SafeAreaView style={[styles.container]}>
-            <ScrollView showsVerticalScrollIndicator={false} style={[styles.contentContainer]}>
+            <ScrollView showsVerticalScrollIndicator={false} style={[styles.contentContainer, {marginBottom: 24}]}>
                 <View style={[appStyles.flex, appStyles.flexRow, appStyles.itemsCenter, appStyles.gap16, {marginBottom: 24}]}>
-                    <View style={styles.icon}>
+                    <Pressable onPress={()=> navigation.goBack()} style={styles.icon}>
                         <ArrowLeftIcon />
-                    </View>
+                    </Pressable>
                     <TitleText text="Create Account" />
                 </View>
                 <View>
@@ -160,19 +163,19 @@ export default function CreateAccountUI({navigation}: any) {
                     
                     
                 </View>
-               
+                <View style={[{marginTop: 8}, ]}>
+                    <CheckBoxField value={formData?.termsAccepted} onChange={()=>handleToggle()}>
+                        <Text style={{marginLeft: 12, paddingTop: 10, paddingRight: 24}}>
+                            By signing up, I agree to Cloit's <Text style={appStyles.underline}>Terms & Conditions</Text> and <Text style={appStyles.underline}>Privacy Policy.</Text>"
+                        </Text>
+                    </CheckBoxField> 
+                </View>
+                <View style={[{marginTop: 24, marginBottom:8}]}>
+                    <AppButton text="Sign Up"  onPress={validateFormInputs} />
+                </View>
             </ScrollView>
             
-            <View style={[{marginTop: 8}, styles.contentContainer]}>
-                <CheckBoxField value={formData?.termsAccepted} onChange={()=>handleToggle()}>
-                    <Text style={{marginLeft: 12, paddingTop: 10, paddingRight: 24}}>
-                        By signing up, I agree to Cloit's <Text style={appStyles.underline}>Terms & Conditions</Text> and <Text style={appStyles.underline}>Privacy Policy.</Text>"
-                    </Text>
-                </CheckBoxField> 
-            </View>
-            <View style={[{marginTop: 24}, styles.contentContainer]}>
-                <AppButton text="Sign Up"  onPress={validateFormInputs} />
-            </View>
+            
         </SafeAreaView>
     );
   }
